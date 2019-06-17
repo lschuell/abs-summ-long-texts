@@ -2,10 +2,6 @@
 
 Abstractive Summarization for Long Texts
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ## Prerequisites/Dependencies
 
 * Python3 (Python3.6 used for testing)
@@ -16,6 +12,28 @@ These instructions will get you a copy of the project up and running on your loc
 * [METEOR](https://www.cs.cmu.edu/~alavie/METEOR/) - for evaluation, set environment variable METEOR for jar file meteor-1.5.jar
 * [Stanford-Parser](https://stanfordnlp.github.io/CoreNLP/) - for tokenization with stanford-parser.jar
 
+## Getting Data
+Provided are the raw Cnn/Dailymail splits, which can be downloaded. They should be placed under data/cnn_dm_finished_files/:
+* [Cnn/Dailymail - Train](https://drive.google.com/file/d/1aFwnabK5A3br77jHdyzQ5uKRCwQkVVYV/view?usp=sharing)
+* [Cnn/Dailymail - Val](https://drive.google.com/file/d/1Jo0NzyIzHtvOe-6pSUFDt2cyY9i2skJL/view?usp=sharing)
+* [Cnn/Dailymail - Test](https://drive.google.com/file/d/1MM1arYNoqhczNSQ2paEnCmSVceiiGB7y/view?usp=sharing)
+
+Next, with dump=True in the train.yml file, a intermediary processed dump will be stored for the specific configurations for subsequent instant load. Alternatively, the data can be processed and dumped independently from the train.py script by calling
+```python
+from Auxiliary.config import Configuration
+from Auxiliary.data import Vocabulary, Generator
+import yaml
+import torch
+
+with open("conf/train.yml", 'r') as ymlfile:
+    cfg = yaml.load(ymlfile)
+CONFIG = Configuration(**cfg)
+DEVICE = torch.device("cpu")
+vocab = Vocabulary(CONFIG.vocab_path, CONFIG.max_vocab)
+gen = Generator(CONFIG, vocab, DEVICE)
+iter = gen('train')
+```
+It is necessary, that dump=True in the train.yml file. Note that the processing for windowing models can take several hours due to the mapping heuristic.
 
 ## Hyperparameters
 Overview for train.yml. Please not that not all combinations of specifications are possible. Refer to the thesis paper to see which models were trained, i.e. Transformer models do not support pointing and reinforcement learning
@@ -120,30 +138,64 @@ Configure conf/train.yml with desired parameters and train a model, which might 
 ```
 python train.py
 ```
+We provide 
+* [Model XXXVIII - 20](https://drive.google.com/file/d/1_4OLpmnQu54HeX91d4VZnXvkWe3e4hbt/view?usp=sharing)
+which should be placed under data/models/. It is the dynamic windowing model trained for 20 epochs (in the paper referenced by CD_IV). 
 
 ### 2) Eval
 
-Evaluate the model with description "XXX" from epoch 20 on the validation/test set - potentially with METEOR - by specifying conf/eval.yml and call
+Evaluate the model with description "XXXVIII" from epoch 20 on the validation/test set - potentially with METEOR - by specifying conf/eval.yml 
+```yaml
+...
+partition: 'test'
+from_save_description: "XXXVIII"
+from_epoch: 20
+...
+```
+and call
 
 ```
 python eval.py
 ```
 
 ### 3) Predict
-Specify conf/predict.yml for predicting a summary for a given document which is printed to the console. Set jar_path to the location, where the tokenizer stanford-parser.jar is placed. Use dir_mode=False and put the desired text file - i.e. example.txt - under data/predictions/example.txt. Call
+Specify conf/predict.yml for predicting a summary for a given document which is printed to the console. Set jar_path to the location, where the tokenizer stanford-parser.jar is placed. Use dir_mode=False and put the desired text file - i.e. example.txt - under data/predictions/example.txt. I.e.
+
+```yaml
+from_save_description: "XXXVIII"
+from_epoch: 20
+dir_mode: False
+input: "example.txt"
+inf_enc_max_len: 400+380*12
+inf_dec_max_len: 100*12
+jar_path: "~/stanford-parser-full-2018-10-17/stanford-parser.jar"
+```
+Then call
 
 ```
 python predict.py
 ```
 
-to generate the summary. Note that for windowing models applied to very long document, the options inf_enc_max_len and inf_dec_max_len need to be specified to ensure extrapolation of the model. I.e.
-```
-inf_enc_max_len = ws + i * ss; inf_dec_max_len = 100 * i
+Note that for windowing models applied to very long document, the options inf_enc_max_len and inf_dec_max_len need to be specified to ensure extrapolation of the model, i.e.
+```yaml
+inf_enc_max_len = ws + i * ss
+inf_dec_max_len = 100 * i
 ```
 where i must be chosen such that ws + i * ss exceeds the document length.
 
 ### 4) Highlight (Visualization Tool)
-Specify conf/highlight.yml for visualizing the summary generation for a document - i.e. example.txt - which must be placed under data/predictions/example.txt. Specify inf_enc_max_len/inf_dec_max_len similar to 3) for windowing models on long documents. Once conf/hightlight.yml is specified, open Highlight.ipynb and click through the visualization.
+Specify conf/highlight.yml for visualizing the summary generation for a document - i.e. example.txt - which must be placed under data/predictions/example.txt. Specify inf_enc_max_len/inf_dec_max_len similar to 3) for windowing models on long documents. Once conf/hightlight.yml is specified, open Highlight.ipynb and click through the visualization:
+
+```python
+from highlight import highlight_vis, vis_dict
+from IPython.display import HTML
+%%javascript
+IPython.OutputArea.prototype._should_scroll = function(lines) {
+    return false;
+}
+test=vis_dict()
+HTML(highlight_vis(test, snapshot=True, hue=270))
+```
 
 ## Authors
 
