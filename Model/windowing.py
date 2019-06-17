@@ -277,19 +277,3 @@ class EncoderSlider(object):
 
         return win_h_j, win_enc_idx
 
-if __name__ == '__main__':
-
-
-    '''
-    device = torch.device("cpu")
-    with open("conf/train.yml", 'r') as ymlfile:
-        cfg = yaml.load(ymlfile)
-    Config = Configuration(**cfg)
-    stepper = Stepper(Config, device)
-    gen = Generator(Config, stepper.vocab, device)
-    val_iter = gen('val')
-    b = next(val_iter)
-    schler = DynamicScheduler(stepper.vocab)
-    map_ = schler._map2win(b, Config.ws, Config.ss)
-    dec_inp, dec_tar = schler.batchup(b, map_)
-    '''

@@ -412,19 +412,6 @@ def dump_embedding_layer(emb_path, vocab, dataset='CnnDm', dim=300, trainable=Tr
     torch.save(layer.state_dict(), os.path.join(os.path.dirname(emb_path), f"dump/initial_{dataset}_{vocab.__len__()}_{dim}.pt"))
 
 
-if __name__ == "__main__":
-    from constants import get_vocab_path
-    from Auxiliary.config import Configuration
-    import yaml
-
-    with open("conf/train.yml", 'r') as ymlfile:
-        cfg = yaml.load(ymlfile)
-    CONFIG = Configuration(**cfg)
-    DEVICE = torch.device("cpu")
-    vocab = Vocabulary(CONFIG.vocab_path, CONFIG.max_vocab)
-    gen = Generator(CONFIG, vocab, DEVICE)
-    iter = gen('train')
-
 
 
 

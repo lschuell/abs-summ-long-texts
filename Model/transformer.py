@@ -198,41 +198,5 @@ class DecoderLayer(nn.Module):
         x = self.sublayer[1](x, lambda x: self.src_attn(x, m, m, src_mask))
         return self.sublayer[2](x, self.feed_forward)
 
-if __name__ == "__main__":
-
-    device = torch.device("cpu")
-    dec_max_len = 100
-    data_val = f"data_CnnDm_val_50000_400_100_False.pickle"
-    X_VAL = pickle_load(os.path.join(DATADUMP_PATH, data_val))
-    val_loader = torch.utils.data.DataLoader(X_VAL, batch_size=4, num_workers=1,
-                                             pin_memory=False, shuffle=True)
-
-    VOCAB = Vocabulary(os.path.join(CNNDM_DIR, "vocab"), 50000)
-    batch = None
-    for i, b in enumerate(val_loader):
-        batch = b
-        if i == 0:
-            break
-
-    batch = batch.long()
-    enc_inputs_oov = batch[:, :400]
-    dec_inputs = batch[:, 400: 400 + 100]
-    dec_targets_oov = batch[:, 400 + 100: 400 + 2 * 100]
-    encoded_oovs = batch[:, 400 + 2 * 100:]
-    enc_inputs_no_oov = mask_oov(enc_inputs_oov, VOCAB)
-
-    d_model = 512; d_ff = 2048; h = 8; dropout = 0.1; N = 6
-    embedding = nn.Embedding(50000, d_model)
-    encoder = EncoderTransformer(embedding, N, VOCAB
-                                 *EncoderTransformer.build(d_model, d_ff, h, dropout))
-    decoder = DecoderTransformer(embedding,
-                                 *DecoderTransformer.build(d_model, d_ff, h, dropout),
-                                 N, VOCAB, device, dec_max_len)
-
-    m = encoder(enc_inputs_no_oov)
-    decoder
-    out, _ = decoder(enc_inputs_no_oov, m, dec_inputs)
-
-    print(out.size())
 
 

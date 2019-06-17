@@ -10,11 +10,4 @@ class Configuration(object):
             self.vocab_path = get_vocab_path(self.dataset)
 
 
-if __name__ == "__main__":
-
-    import yaml
-    with open("conf/train.yml", 'r') as ymlfile:
-        cfg = yaml.load(ymlfile)
-    config = Configuration(**cfg)
-    printConfig(config)
 

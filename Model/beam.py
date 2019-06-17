@@ -234,6 +234,3 @@ class BeamSearchDecoder(object):
 
         return self.hyps_pointer if self.Config.pointer else self.hyps
 
-
-    def _dynamic_slide(self):
-        pass

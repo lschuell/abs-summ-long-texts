@@ -329,8 +329,3 @@ def highlight_vis(ex, snapshot=True, hue=270):
     '''
     return snap_html_str if snapshot else html_str
 
-
-if __name__ == "__main__":
-    w_ = vis_dict()
-    str_ = article_div(w_)
-    highlight_vis(w_, hue=270)
