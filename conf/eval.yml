@@ -1,0 +1,42 @@
+# Configuration File for Evaluation Script, look up ws, ss, k, d in corresponding experiment log file for experiment validation reconstruction
+
+# DEVICE
+device: "cpu"
+
+# BATCH SIZE
+batch_size: 200
+
+# PARTITION
+partition: 'test' # train, val, test
+
+# MODEL FROM
+from_save_description: "XXXXIIcont"
+from_epoch: 15
+
+# BEAM SIZE
+B:
+  - 3
+
+# FIRST SKEWNESS PARAMETER FOR SCHEDULER
+k:
+  - 1.4
+
+
+# Second skewness parameter for scheduler
+d:
+  - 0.4
+
+
+# Window size
+ws: 400
+
+# Step size
+ss: 200
+
+# WHETHER TO EVALUATE METEOR
+meteor: True
+
+# TOY RUN
+toy_run: False
+dump: True
+

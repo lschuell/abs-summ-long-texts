@@ -1,0 +1,30 @@
+# Configuration File for Evaluation Script, look up ws, ss, k, d in corresponding experiment log file for experiment validation reconstruction
+
+# DEVICE
+device: "cpu"
+
+# MODEL FROM
+from_save_description: "XXXII" # XXXVIII - 20 (dynamic), XXXXIIcont - 15 (static), XXXIII - 20 (normal) ||| Wiki: XXXII - 20 (dynamic)
+from_epoch: 20
+
+# DIRECTORY MODE - WHETHER TO EVALUATE WHOLE DIRECTORY WITH STRUCTURE
+# - DIR
+#   - source > source_001.txt, source_002.txt, ...
+#   - target > target_001.txt, target_002.txt, ...
+# -> results in - prediction > prediction_001.txt, prediction_002.txt
+dir_mode: False
+
+# PATH TO INPUT TEXT FILE OR DIRECTORY IN data/predictions
+input: "wikipedia.txt" # "test8.txt"
+inf_enc_max_len: #400+380*32
+inf_dec_max_len: #100*32
+
+
+# TOKENIZER JAR PATH
+jar_path: "~/stanford-parser-full-2018-10-17/stanford-parser.jar"
+
+# BEAM SIZE
+B: 3
+
+
+
