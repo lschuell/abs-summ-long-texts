@@ -17,7 +17,11 @@ For evaluation, you will need [ROUGE](https://stackoverflow.com/questions/470454
 ```
 export METEOR=/path/to/meteor-1.5.jar
 ```
- 
+Setup some further directories
+```
+mkdir data/dump data/models output
+mkdir output/evals
+```
 
 ## Getting Data
 Provided are the raw Cnn/Dailymail splits, which can be downloaded. They should be placed under data/cnn_dm_finished_files/:
@@ -49,7 +53,7 @@ Overview for train.yml. Please not that not all combinations of specifications a
 | ------------- |:-------------:| -----:|
 | dataset       | CnnDm/Wiki/Pubmed | choose dataset |
 | dump | True | whether to dump pre-processed dataset for subsequent instant load |
-| device        | cuda:0/cpu         | whether to work on cpu/selected gpu |
+| device        | cpu/cuda:0         | whether to work on cpu/selected gpu |
 | num_threads   | 1                 | number of threads used |
 | batch_size    | 12                | batch size used for dynamic batching |
 | shuffle       | True              | whether to shuffle instances in dataset |
@@ -59,7 +63,7 @@ Overview for train.yml. Please not that not all combinations of specifications a
 | Option        | Example Values | Description  |
 | ------------- |:-------------:| -----:|
 | criterion     | "torch.nn.NLLLoss() | criterion used for training, negative log likelihood |
-| save_interval | 4                 | save model every 4 epochs |
+| save_interval | 2                 | save model every 2 epochs |
 | log_interal | 2 | log example output every 2 epochs |
 | val_interval | 4  | validate model every 4 epochs using Rouge metrics |
 | num_epochs | 20 | train model for 20 epochs |
@@ -136,29 +140,29 @@ Overview for train.yml. Please not that not all combinations of specifications a
 
 ## Use Cases
 
-The following uses cases demonstrate example usages
-
-### 1) Train 
-
-Configure conf/train.yml with desired parameters and train a model, which might be saved with description "XXX" and stored at epoch 20:
-
-```
-python train.py
-```
-We provide 
+We provide two pretrained models, which must be placed under data/models/
 * [Model XXXVIII - 20](https://drive.google.com/file/d/1_4OLpmnQu54HeX91d4VZnXvkWe3e4hbt/view?usp=sharing)
 Dynamic windowing model trained for 20 epochs (in the paper referenced by CD_IV)
 * [Model XXXIII - 20 ](https://drive.google.com/file/d/1exku8XkLnQw9kARmrs6YjfQeFSdY7YN6/view?usp=sharing)
 Standard model trained for 20 epochs (in the paper referenced by CD_I)
-The models must be placed under data/models/
+
+The following uses cases demonstrate example usages
+
+### 1) Train 
+
+Configure conf/train.yml with desired parameters and train a model, which might be saved with description "I" and stored at every save_interval epochs:
+
+```
+python train.py
+```
 
 ### 2) Eval
 
-Evaluate the model with description "XXXVIII" from epoch 20 on the validation/test set - potentially with METEOR - by specifying conf/eval.yml 
+Evaluate the standard model with description "XXXIII" from epoch 20 on the test set - potentially with METEOR - by specifying conf/eval.yml 
 ```yaml
 ...
 partition: 'test'
-from_save_description: "XXXVIII"
+from_save_description: "XXXIII"
 from_epoch: 20
 ...
 ```
@@ -169,7 +173,7 @@ python eval.py
 ```
 
 ### 3) Predict
-Specify conf/predict.yml for predicting a summary for a given document which is printed to the console. Set jar_path to the location, where the tokenizer stanford-parser.jar is placed. Use dir_mode=False and put the desired text file - i.e. example.txt - under data/predictions/example.txt. I.e.
+Specify conf/predict.yml for predicting a summary with the dynamic windowing model for a given document which is printed to the console. Set jar_path to the location, where the tokenizer stanford-parser.jar is placed. Use dir_mode=False and put the desired text file - i.e. example.txt - under data/predictions/example.txt. I.e.
 
 ```yaml
 from_save_description: "XXXVIII"
@@ -194,7 +198,7 @@ inf_dec_max_len = 100 * i
 where i must be chosen such that ws + i * ss exceeds the document length.
 
 ### 4) Highlight (Visualization Tool)
-Specify conf/highlight.yml for visualizing the summary generation for a document - i.e. example.txt - which must be placed under data/predictions/example.txt. Specify inf_enc_max_len/inf_dec_max_len similar to 3) for windowing models on long documents. Once conf/hightlight.yml is specified, open Highlight.ipynb and click through the visualization:
+Specify conf/highlight.yml for visualizing the dynamic windowing model's summary generation for a document - i.e. example.txt - which must be placed under data/predictions/example.txt. Specify inf_enc_max_len/inf_dec_max_len similar to 3) for windowing models on long documents. Once conf/hightlight.yml is specified, open Highlight.ipynb and click through the visualization:
 
 ```python
 from highlight import highlight_vis, vis_dict
