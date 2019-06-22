@@ -140,7 +140,10 @@ python train.py
 ```
 We provide 
 * [Model XXXVIII - 20](https://drive.google.com/file/d/1_4OLpmnQu54HeX91d4VZnXvkWe3e4hbt/view?usp=sharing)
-which should be placed under data/models/. It is the dynamic windowing model trained for 20 epochs (in the paper referenced by CD_IV). 
+Dynamic windowing model trained for 20 epochs (in the paper referenced by CD_IV)
+* [Model XXXIII - 20 ](https://drive.google.com/file/d/1exku8XkLnQw9kARmrs6YjfQeFSdY7YN6/view?usp=sharing)
+Standard model trained for 20 epochs (in the paper referenced by CD_I)
+The models must be placed under data/models/
 
 ### 2) Eval
 
