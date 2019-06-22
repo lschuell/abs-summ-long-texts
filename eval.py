@@ -27,6 +27,7 @@ CONFIG.vocab_path = get_vocab_path(CONFIG.dataset)
 CONFIG.eval_beam = True
 CONFIG.meteor = CFG['meteor']
 CONFIG.dump = CFG['dump']
+CONFIG.batch_size = CFG['batch_size']
 printConfig(CONFIG)
 STEPPER = Stepper(CONFIG, DEVICE)
 STEPPER.eval()
