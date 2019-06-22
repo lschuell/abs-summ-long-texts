@@ -4,14 +4,14 @@
 device: "cpu"
 
 # BATCH SIZE
-batch_size: 200
+batch_size: 2
 
 # PARTITION
 partition: 'test' # train, val, test
 
 # MODEL FROM
-from_save_description: "XXXXIIcont"
-from_epoch: 15
+from_save_description: "XXXIII"
+from_epoch: 20
 
 # BEAM SIZE
 B:
@@ -34,9 +34,9 @@ ws: 400
 ss: 200
 
 # WHETHER TO EVALUATE METEOR
-meteor: True
+meteor: False
 
 # TOY RUN
-toy_run: False
+toy_run: True
 dump: True
 

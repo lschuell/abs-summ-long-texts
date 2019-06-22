@@ -4,7 +4,7 @@
 device: "cpu"
 
 # MODEL FROM
-from_save_description: "XXXII" # XXXVIII - 20 (dynamic), XXXXIIcont - 15 (static), XXXIII - 20 (normal) ||| Wiki: XXXII - 20 (dynamic)
+from_save_description: "XXXVIII"
 from_epoch: 20
 
 # DIRECTORY MODE - WHETHER TO EVALUATE WHOLE DIRECTORY WITH STRUCTURE
@@ -15,13 +15,13 @@ from_epoch: 20
 dir_mode: False
 
 # PATH TO INPUT TEXT FILE OR DIRECTORY IN data/predictions
-input: "wikipedia.txt" # "test8.txt"
-inf_enc_max_len: #400+380*32
-inf_dec_max_len: #100*32
+input: "hongkong.txt" # "test8.txt"
+inf_enc_max_len: 400+380*5
+inf_dec_max_len: 100*5
 
 
 # TOKENIZER JAR PATH
-jar_path: "~/stanford-parser-full-2018-10-17/stanford-parser.jar"
+jar_path: "~/Documents/Master_Data_Science/Master_Thesis/stanford-parser-full-2018-10-17/stanford-parser.jar"
 
 # BEAM SIZE
 B: 3

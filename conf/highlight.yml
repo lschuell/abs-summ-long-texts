@@ -14,7 +14,7 @@ inf_enc_max_len: 400+5*380
 inf_dec_max_len: 100*5
 
 # TOKENIZER JAR PATH
-jar_path: "~/stanford-parser-full-2018-10-17/stanford-parser.jar"
+jar_path: "~/Documents/Master_Data_Science/Master_Thesis/stanford-parser-full-2018-10-17/stanford-parser.jar"
 
 # BEAM SIZE
 B: 3
