@@ -2,15 +2,22 @@
 
 Abstractive Summarization for Long Texts
 
-## Prerequisites/Dependencies
-
-* Python3 (Python3.6 used for testing)
-* [Pytorch 1.1.0](https://pytorch.org/)
-* [tensorflow](https://www.tensorflow.org/)
-* [numpy](https://www.numpy.org/)
-* [pyrouge](https://github.com/andersjo/pyrouge) - for evaluation
-* [METEOR](https://www.cs.cmu.edu/~alavie/METEOR/) - for evaluation, set environment variable METEOR for jar file meteor-1.5.jar
-* [Stanford-Parser](https://stanfordnlp.github.io/CoreNLP/) - for tokenization with stanford-parser.jar
+## Setup
+Build and activate the conda environment
+```
+conda env create -f environment.yml
+conda activate sum-env
+```
+Download the Stanford-Parser, i.e. in home directory
+```
+wget https://nlp.stanford.edu/software/stanford-parser-full-2018-10-17.zip
+unzip stanford-parser-full-2018-10-17.zip
+```
+For evaluation, you will need [ROUGE](https://stackoverflow.com/questions/47045436/how-to-install-the-python-package-pyrouge-on-microsoft-windows) and [METEOR](https://www.cs.cmu.edu/~alavie/METEOR/). For METEOR, set an environment variable, i.e. 
+```
+export METEOR=/path/to/meteor-1.5.jar
+```
+ 
 
 ## Getting Data
 Provided are the raw Cnn/Dailymail splits, which can be downloaded. They should be placed under data/cnn_dm_finished_files/:
