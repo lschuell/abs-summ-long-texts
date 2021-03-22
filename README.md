@@ -199,11 +199,7 @@ IPython.OutputArea.prototype._should_scroll = function(lines) {
 }
 test=vis_dict()
 HTML(highlight_vis(test, snapshot=True, hue=270))
-```
-
-## Authors
-
-* **Leon Schüller** 
+``` 
 
 ## Acknowledgments
 
