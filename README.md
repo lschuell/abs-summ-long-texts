@@ -23,13 +23,9 @@ mkdir data/dump data/models output
 mkdir output/evals
 ```
 
-## Getting Data
-Provided are the raw Cnn/Dailymail splits, which can be downloaded. They should be placed under data/cnn_dm_finished_files/:
-* [Cnn/Dailymail - Train](https://drive.google.com/file/d/1aFwnabK5A3br77jHdyzQ5uKRCwQkVVYV/view?usp=sharing)
-* [Cnn/Dailymail - Val](https://drive.google.com/file/d/1Jo0NzyIzHtvOe-6pSUFDt2cyY9i2skJL/view?usp=sharing)
-* [Cnn/Dailymail - Test](https://drive.google.com/file/d/1MM1arYNoqhczNSQ2paEnCmSVceiiGB7y/view?usp=sharing)
+## Processing Data
 
-Next, with dump=True in the train.yml file, a intermediary processed dump will be stored for the specific configurations for subsequent instant load. Alternatively, the data can be processed and dumped independently from the train.py script by calling
+With dump=True in the train.yml file, a intermediary processed dump will be stored for the specific configurations for subsequent instant load. Alternatively, the data can be processed and dumped independently from the train.py script by calling
 ```python
 from Auxiliary.config import Configuration
 from Auxiliary.data import Vocabulary, Generator
