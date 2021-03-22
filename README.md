@@ -140,12 +140,6 @@ Overview for train.yml. Please not that not all combinations of specifications a
 
 ## Use Cases
 
-We provide two pretrained models, which must be placed under data/models/
-* [Model XXXVIII - 20](https://drive.google.com/file/d/1_4OLpmnQu54HeX91d4VZnXvkWe3e4hbt/view?usp=sharing)
-Dynamic windowing model trained for 20 epochs (in the paper referenced by CD_IV)
-* [Model XXXIII - 20 ](https://drive.google.com/file/d/1exku8XkLnQw9kARmrs6YjfQeFSdY7YN6/view?usp=sharing)
-Standard model trained for 20 epochs (in the paper referenced by CD_I)
-
 The following uses cases demonstrate example usages
 
 ### 1) Train 
