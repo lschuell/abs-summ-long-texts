@@ -203,7 +203,7 @@ HTML(highlight_vis(test, snapshot=True, hue=270))
 
 ## Acknowledgments
 
-Hat tip to the follwing repositories for code/inspiration
+Acks to the follwing repositories for code snippets and inspiration
 * http://nlp.seas.harvard.edu/2018/04/03/attention.html
 * https://github.com/abisee/pointer-generator
 * https://github.com/ChenRocks/fast_abs_rl
